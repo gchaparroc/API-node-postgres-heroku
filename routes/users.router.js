@@ -14,10 +14,15 @@ router.get('/filter', (req, res) => {
   res.send('Yo soy un filter');
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const user = await service.findOne(id);
-  res.json(user);
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await service.findOne(id);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+
 });
 
 router.post('/', async (req, res) => {
@@ -40,10 +45,15 @@ router.patch('/:id', async (req, res) => {
 
 });
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const rta = await service.delete(id);
-  res.json(rta);
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const rta = await service.delete(id);
+    res.json(rta);
+  } catch (error) {
+    next(error);
+  }
+
 });
 
 module.exports = router;

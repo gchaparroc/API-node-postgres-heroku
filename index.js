@@ -1,5 +1,6 @@
 const express=require('express');
 const routerApi=require('./routes');
+const { boomErrorHandler  } = require('./middlewares/error.handler');
 
 const app=express();
 
@@ -12,6 +13,8 @@ app.get('/',(req,res)=>{
 });
 
 routerApi(app);
+
+app.use(boomErrorHandler);
 
 app.listen(port,()=>{
 	console.log('Mi port'+port);
